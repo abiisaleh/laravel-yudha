@@ -16,21 +16,26 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
+            'name' => 'eko wahyu',
+            'email' => 'ekowahyu@demo.com',
+            'password' => 'demo1234',
+        ]);
+
+        \App\Models\User::factory()->create([
             'name' => 'abiisaleh',
             'email' => 'abiisaleh@demo.com',
             'password' => 'demo1234',
-            'role' => 'pelanggan',
+            'role' => 'admin',
         ]);
 
         DB::table('toko_user')->insert([
             [
                 'toko_id' => \App\Models\Toko::factory()->create([
                     'nama' => 'Samsung Service Center',
+                    'jenis' => 'teknisi',
                     'alamat' => 'Jl. Raya Abepura, (Depan Kantor BPJS)',
                     'kecamatan' => 'Abepura',
                     'kelurahan' => 'Wahno',
-                    'lat' => '',
-                    'lng' => '',
                 ])->id,
                 'user_id' => \App\Models\User::factory()->create([
                     'name' => 'yudha',
@@ -42,11 +47,10 @@ class DatabaseSeeder extends Seeder
             [
                 'toko_id' => \App\Models\Toko::factory()->create([
                     'nama' => 'Salsa Cell',
+                    'jenis' => 'distributor',
                     'alamat' => 'samping bank BTN Abepura',
                     'kecamatan' => 'Abepura',
                     'kelurahan' => 'Kota Baru',
-                    'lat' => '',
-                    'lng' => '',
                 ])->id,
                 'user_id' =>  \App\Models\User::factory()->create([
                     'name' => 'syafiq',

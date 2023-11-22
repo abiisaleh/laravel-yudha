@@ -16,8 +16,13 @@ class UserPanelRedirect
     public function handle(Request $request, Closure $next): Response
     {
         if (auth()->user()->role == 'pelanggan') {
-            return redirect('user');
+            if (url()->current() != filament()->getLogoutUrl()) {
+                return redirect('user');
+            }
+        } elseif (in_array(auth()->user()->role, ['teknisi', 'distributor'])) {
+            return redirect('/app');
         }
+
         return $next($request);
     }
 }

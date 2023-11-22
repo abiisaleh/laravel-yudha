@@ -2,10 +2,13 @@
 
 namespace App\Providers\Filament;
 
-use App\Http\Middleware\UserPanelRedirect;
+use App\Filament\App\Pages\Tenancy\EditTeam;
+use App\Filament\App\Pages\Tenancy\RegisterTeam;
+use App\Models\Toko;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -19,18 +22,21 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AdminPanelProvider extends PanelProvider
+class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('admin')
-            ->path('admin')
+            ->default()
+            ->id('app')
+            ->path('app')
+            ->profile()
+            ->registration()
+            ->tenant(Toko::class)
+            ->tenantProfile(EditTeam::class)
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->login()
-            ->registration()
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([
@@ -54,7 +60,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                UserPanelRedirect::class
             ]);
     }
 }

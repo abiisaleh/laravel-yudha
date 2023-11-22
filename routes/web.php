@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.index', [
-        'toko' => App\Models\Toko::with('user')->whereHas('user', fn (Builder $query) => $query->where('role', 'teknisi'))->get(),
+        'toko' => App\Models\Toko::where('jenis', 'teknisi')->get(),
     ]);
 });
 
@@ -26,6 +27,21 @@ Route::get('detail/{id}', function (string $id) {
     ]);
 });
 
+Route::post('search', function (Request $request) {
+    return view('pages.search', [
+        'toko' => App\Models\Toko::where('jenis', 'teknisi')->where('nama', 'like', '%' . $request->input('keyword') . '%')->get(),
+        'keyword' => $request->input('keyword')
+    ]);
+})->name('search');
+
 Route::get('user', function () {
-    return view('pages.user');
-});
+    return view('pages.user-dashboard');
+})->name('dashboard');
+
+Route::get('user/notifikasi', function () {
+    return view('pages.user-notifikasi');
+})->name('notifikasi');
+
+Route::get('user/perbaikan', function () {
+    return view('pages.user-perbaikan');
+})->name('perbaikan');

@@ -21,7 +21,7 @@ class PesanBarangResource extends Resource
 {
     protected static ?string $model = PesanBarang::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-truck';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static ?string $pluralLabel = 'Order';
 

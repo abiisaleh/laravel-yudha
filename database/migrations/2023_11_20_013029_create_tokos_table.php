@@ -12,9 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tokos', function (Blueprbint $table) {
+        Schema::create('tokos', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->enum('jenis', ['teknisi', 'distributor']);
             $table->string('gambar')->nullable();
             $table->string('kecamatan');
             $table->string('kelurahan');
