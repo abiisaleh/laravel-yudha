@@ -20,8 +20,6 @@ return new class extends Migration
             $table->string('kecamatan');
             $table->string('kelurahan');
             $table->text('alamat');
-            $table->string('lat')->nullable();
-            $table->string('lng')->nullable();
             $table->timestamps();
         });
     }

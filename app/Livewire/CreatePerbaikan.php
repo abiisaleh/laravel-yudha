@@ -34,7 +34,7 @@ class CreatePerbaikan extends Component implements HasForms
         return $form
             ->schema([
                 TextInput::make('email')
-                    ->default(auth()->user()->email)
+                    ->default(auth()->user()->email ?? null)
                     ->email()
                     ->required(),
                 FileUpload::make('gambar'),

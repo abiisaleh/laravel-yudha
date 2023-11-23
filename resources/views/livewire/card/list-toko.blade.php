@@ -14,19 +14,13 @@
           @foreach ($items as $item)
       
           <div class="shadow-lg min-w-sm w-full mx-auto bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
-                <iframe 
-                        class="rounded-t-lg w-full"
-                        src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}
-                        &q={{$item->lat}},{{$item->lng}}&region=id" 
-                        height="220" 
-                        style="border:0;" 
-                        allowfullscreen="true" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade"
-                        >
-                </iframe>
+            @if (is_null($item->gambar))
+                <img class="h-auto max-w-full rounded-t-lg" src="default.jpg" alt="image description">
+            @else
+                <img class="h-auto max-w-full rounded-t-lg" src="{{ $item->gambar }}" alt="image description">
+            @endif
             <div class="p-5">
-                <span class="bg-yellow-100 text-sm md:text-lg lg:text-xl text-yellow-800 font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">⭐ 4.2</span>
+                <span class="bg-yellow-100 text-yellow-800 font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">⭐ 4.2</span>
                 <a href="detail/{{$item->id}}">
                     <h5 class="mt-2 mb-2 text-sm md:text-lg lg:text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $item->nama }}</h5>
                 </a>

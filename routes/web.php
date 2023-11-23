@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.index', [
-        'toko' => App\Models\Toko::where('jenis', 'teknisi')->get(),
+        'toko' => App\Models\Toko::where('jenis', 'teknisi')->take(4)->get(),
     ]);
 });
 

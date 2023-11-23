@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\BarangResource\Pages;
+namespace App\Filament\App\Resources\BarangResource\Pages;
 
-use App\Filament\Resources\BarangResource;
+use App\Filament\App\Resources\BarangResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

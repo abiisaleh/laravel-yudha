@@ -63,11 +63,5 @@
             'subheading' => 'Service center polpuler yang selalu rame.',
         ])
 
-        @livewire('card.list-toko',[
-            'items' => $toko,
-            'heading' => 'Service center terdekat!',
-            'subheading' => 'Kunjungi service center yang ada didekatmu.',
-        ])
-
 @endsection
 

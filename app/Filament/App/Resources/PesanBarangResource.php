@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\App\Resources;
 
-use App\Filament\Resources\PesanBarangResource\Pages;
+use App\Filament\App\Resources\PesanBarangResource\Pages;
 use App\Filament\Resources\PesanBarangResource\RelationManagers;
 use App\Models\Barang;
 use App\Models\PesanBarang;

@@ -13,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -20,6 +21,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\File;
 
 class TeknisiResource extends Resource
 {
@@ -41,8 +43,29 @@ class TeknisiResource extends Resource
                 Grid::make(1)->schema([
                     Grid::make()->schema([
                         Select::make('kecamatan')
+                            ->native(false)
+                            ->options(function () {
+                                $data = File::json('kotajayapura.json');
+                                foreach ($data as $key => $value) {
+                                    $options[$key] = $key;
+                                }
+                                return $options;
+                            })
                             ->required(),
                         Select::make('kelurahan')
+                            ->native(false)
+                            ->options(function (Get $get) {
+                                $kecamatan = $get('kecamatan');
+                                $data = File::json('kotajayapura.json');
+                                if (!$kecamatan) {
+                                    return [];
+                                }
+
+                                foreach ($data[$kecamatan] as $item) {
+                                    $options[$item] = $item;
+                                }
+                                return $options;
+                            })
                             ->required(),
                     ]),
                     Textarea::make('alamat')
@@ -57,6 +80,8 @@ class TeknisiResource extends Resource
             ->query(Toko::where('jenis', 'teknisi'))
             ->columns([
                 TextColumn::make('nama')->searchable(),
+                TextColumn::make('kecamatan')->searchable(),
+                TextColumn::make('kelurahan')->searchable(),
                 TextColumn::make('user.email')->searchable(),
             ])
             ->filters([
