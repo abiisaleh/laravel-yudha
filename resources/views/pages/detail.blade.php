@@ -59,7 +59,7 @@
                 <p class="text-gray-500 sm:text-xl dark:text-gray-400">Beritahu kami masalahmu</p>
             </div>
             @if (auth()->check()) 
-                @livewire('create-perbaikan')
+                @livewire('create-perbaikan',['tokoId' => $toko->id])
             @else 
               <div id="alert-1" class="flex items-center p-4 mb-2 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300" role="alert">
                 <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

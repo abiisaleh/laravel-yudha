@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Perbaikan;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
@@ -18,6 +19,8 @@ use Livewire\Component;
 class CreatePerbaikan extends Component implements HasForms
 {
     use InteractsWithForms;
+
+    public $tokoId;
 
     public ?array $data = [];
 
@@ -38,12 +41,16 @@ class CreatePerbaikan extends Component implements HasForms
                 Textarea::make('detail_kerusakan')
                     ->rows(5),
             ])
+            ->model(Perbaikan::class)
             ->statePath('data');
     }
 
     public function create(): void
     {
-        dd($this->form->getState());
+        $data = $this->form->getState();
+        $data['toko_id'] = $this->tokoId;
+        $data['user_id'] = auth()->id;
+        Perbaikan::create($data);
     }
 
     public function render()
