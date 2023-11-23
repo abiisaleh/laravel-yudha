@@ -13,5 +13,5 @@ jobs:
       with:
         server: 154.41.240.56
         server-dir: iservice/
-        username: u379276371
+        username: u379276371.hugo
         password: ${{ secrets.ftp_password }}
