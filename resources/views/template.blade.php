@@ -44,7 +44,9 @@
 
         @livewire('notifications')
 
-        @livewire('database-notifications')
+        @if (auth()->check())   
+            @livewire('database-notifications')
+        @endif
 
         <footer class="bg-white dark:bg-gray-900">
             <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">

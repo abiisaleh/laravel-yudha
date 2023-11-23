@@ -6,7 +6,7 @@
         </button>
         
         <!-- Dropdown menu -->
-        <div id="dropdownAvatarName" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+        <div id="dropdownAvatarName" class="z-10 hidden !-left-5 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
             <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
             <div class="font-medium ">{{ucfirst(auth()->user()->role)}}</div>
             <div class="truncate">{{auth()->user()->email}}</div>
