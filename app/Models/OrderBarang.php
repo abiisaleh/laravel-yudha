@@ -6,13 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Barang extends Model
+class OrderBarang extends Pivot
 {
     use HasFactory;
 
-    public function toko(): BelongsTo
+    public function orders(): BelongsTo
     {
-        return $this->belongsTo(Toko::class);
+        return $this->belongsTo(Order::class);
+    }
+
+    public function barangs(): BelongsTo
+    {
+        return $this->belongsTo(Barang::class);
     }
 }

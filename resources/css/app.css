@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.active {
+    @apply text-primary-600 bg-primary-600 bg-opacity-10 border-primary-600;
+}

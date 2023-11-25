@@ -51,14 +51,16 @@
         </section>
           
         @livewire('card.list-toko',[
-            'items' => $toko,
+            'items' => $terbaik,
+            'id' => 'terbaik',
             'class' => 'bg-primary-50 dark:bg-gray-800',
             'heading' => 'Service center terbaik! 🏆🤩',
         ])
 
 
         @livewire('card.list-toko',[
-            'items' => $toko,
+            'items' => $populer,
+            'id' => 'populer',
             'heading' => 'Paling banyak dikunjungi!',
             'subheading' => 'Service center polpuler yang selalu rame.',
         ])

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Toko;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(Toko::class)->constrained();
+            $table->boolean('lunas')->default(false);
+            $table->boolean('diterima')->default(false);
             $table->timestamps();
         });
     }

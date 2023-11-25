@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Barang;
-use App\Models\Toko;
+use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pesan_barangs', function (Blueprint $table) {
+        Schema::create('order_barang', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Barang::class)->constrained();
-            $table->foreignIdFor(Toko::class)->constrained();
-            $table->integer('qty');
-            $table->boolean('lunas')->default(false);
-            $table->boolean('diterima')->default(false);
+            $table->foreignIdFor(Order::class)->constrained();
+            $table->integer('qty')->default(1);
+            $table->integer('harga');
+            $table->integer('subtotal');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pesan_barangs');
+        Schema::dropIfExists('order_barang');
     }
 };

@@ -18,6 +18,11 @@ class Toko extends Model implements HasName
         return $this->belongsToMany(User::class);
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function barangs(): HasMany
     {
         return $this->hasMany(Barang::class);

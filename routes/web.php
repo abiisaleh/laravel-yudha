@@ -17,7 +17,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.index', [
-        'toko' => App\Models\Toko::where('jenis', 'teknisi')->take(4)->get(),
+        'terbaik' => [
+            'semua' => App\Models\Toko::where('jenis', 'teknisi')->take(4)->get(),
+            'abepura' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'abepura')->take(4)->get(),
+            'heram' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'heram')->take(4)->get(),
+            'jayapura-utara' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'jayapura utara')->take(4)->get(),
+            'jayapura-selatan' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'jayapura selatan')->take(4)->get(),
+            'muara-tami' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'muara tami')->take(4)->get(),
+        ],
+        'populer' => [
+            'semua' => App\Models\Toko::where('jenis', 'teknisi')->take(4)->get(),
+            'abepura' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'abepura')->take(4)->get(),
+            'heram' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'heram')->take(4)->get(),
+            'jayapura-utara' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'jayapura utara')->take(4)->get(),
+            'jayapura-selatan' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'jayapura selatan')->take(4)->get(),
+            'muara-tami' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'muara tami')->take(4)->get(),
+        ],
     ]);
 });
 

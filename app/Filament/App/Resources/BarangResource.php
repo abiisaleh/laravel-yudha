@@ -49,35 +49,62 @@ class BarangResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                Tables\Columns\ImageColumn::make('gambar')
-                    ->circular(),
-                Tables\Columns\TextColumn::make('nama')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('harga')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        if (auth()->user()->role == 'teknisi') {
+            return $table
+                ->query(Barang::query())
+                ->columns([
+                    Tables\Columns\ImageColumn::make('gambar')
+                        ->circular(),
+                    Tables\Columns\TextColumn::make('nama')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('harga')
+                        ->numeric()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('toko.nama')
+                        ->searchable(),
+                ])
+                ->filters([
+                    //
+                ])
+                ->actions([
+                    Tables\Actions\EditAction::make(),
+                ])
+                ->bulkActions([
+                    Tables\Actions\BulkActionGroup::make([
+                        Tables\Actions\DeleteBulkAction::make(),
+                    ]),
+                ]);
+        } else {
+            return $table
+                ->columns([
+                    Tables\Columns\ImageColumn::make('gambar')
+                        ->circular(),
+                    Tables\Columns\TextColumn::make('nama')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('harga')
+                        ->numeric()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('updated_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                ])
+                ->filters([
+                    //
+                ])
+                ->actions([
+                    Tables\Actions\EditAction::make(),
+                ])
+                ->bulkActions([
+                    Tables\Actions\BulkActionGroup::make([
+                        Tables\Actions\DeleteBulkAction::make(),
+                    ]),
+                ]);
+        }
     }
 
     public static function getRelations(): array

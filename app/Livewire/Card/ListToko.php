@@ -10,6 +10,7 @@ class ListToko extends Component
     public $class = 'bg-white dark:bg-gray-900';
     public $heading = '';
     public $subheading = '';
+    public $id = '';
 
     public function render()
     {
