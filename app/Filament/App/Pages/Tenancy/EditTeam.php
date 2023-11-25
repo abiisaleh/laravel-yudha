@@ -10,8 +10,10 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Pages\Tenancy\EditTenantProfile;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 class EditTeam extends EditTenantProfile
 {
@@ -32,8 +34,29 @@ class EditTeam extends EditTenantProfile
                 Grid::make(1)->schema([
                     Grid::make()->schema([
                         Select::make('kecamatan')
+                            ->native(false)
+                            ->options(function () {
+                                $data = File::json('kotajayapura.json');
+                                foreach ($data as $key => $value) {
+                                    $options[$key] = $key;
+                                }
+                                return $options;
+                            })
                             ->required(),
                         Select::make('kelurahan')
+                            ->native(false)
+                            ->options(function (Get $get) {
+                                $kecamatan = $get('kecamatan');
+                                $data = File::json('kotajayapura.json');
+                                if (!$kecamatan) {
+                                    return [];
+                                }
+
+                                foreach ($data[$kecamatan] as $item) {
+                                    $options[$item] = $item;
+                                }
+                                return $options;
+                            })
                             ->required(),
                     ]),
                     Textarea::make('alamat')
