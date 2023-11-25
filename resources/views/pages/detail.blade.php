@@ -12,24 +12,11 @@
                 <h3 class="mb-2 text-3xl tracking-tight font-bold text-gray-900 dark:text-white">{{$toko->nama}}</h3>
                 
                 <div class="flex items-center mb-2">
-                    <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <svg class="w-4 h-4 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                    </svg>
-                    <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">4.95</p>
+                    @livewire('rating', ['rating' => $toko->perbaikans()->where('rating','!=','null')->avg('rating')])
+                    
+                    <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">{{number_format($toko->perbaikans()->where('rating','!=','null')->avg('rating'),2)}}</p>
                     <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">out of</p>
-                    <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
+                    <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">{{$toko->perbaikans()->where('rating','!=','null')->count()}}</p>
                 </div>
                 
                 <div class="flex items-center">
@@ -42,7 +29,24 @@
 
                 <p class="mb-8 mt-4 font-normal text-gray-500 dark:text-gray-200">📍 {{$toko->alamat}}, Kel. {{$toko->kelurahan}}, Kec. {{$toko->kecamatan}}</p>
                 
-                @livewire('card.list-review')
+                @foreach ($toko->perbaikans as $item)
+                <article class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+                    <div class="flex items-center mb-4">
+                        <img class="w-10 h-10 me-4 rounded-full" src="{{filament()->getUserAvatarUrl($item->user)}}" alt="">
+                        <div class="font-medium dark:text-white">
+                            <p>{{$item->name}} <time datetime="2014-08-16 19:00" class="block text-sm text-gray-500 dark:text-gray-400">Joined on {{ date('M Y', strtotime($item->user->created_at)) }}</time></p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mb-5">
+                        @livewire('rating', ['rating' => $item->rating])
+                        <footer class="ms-2 text-sm text-gray-500 dark:text-gray-400"><p>Reviewed on <time datetime="2017-03-03 19:00">{{date('d M Y', strtotime($item->user->updated_at))}}</time></p></footer>
+                    </div>
+
+                    
+                    <p class="mb-2 text-gray-500 dark:text-gray-400">{{$item->comment}}</p>
+                </article>
+                @endforeach
             </div>
         </div>
 
@@ -52,6 +56,8 @@
                 <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Contact us</h2>
                 <p class="text-gray-500 sm:text-xl dark:text-gray-400">Beritahu kami masalahmu</p>
             </div>
+            @if (!auth()->check())
+                
             <div id="alert-1" class="flex items-center p-4 mb-2 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300" role="alert">
                 <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
@@ -61,6 +67,7 @@
                   <a href="admin/login" class="font-semibold underline hover:no-underline">Login</a> untuk mendapatkan status perbaikan secara langsung
                 </div>
             </div>
+            @endif
 
             @livewire('create-perbaikan',['tokoId' => $toko->id])
 

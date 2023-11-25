@@ -40,7 +40,7 @@ Route::get('/', function () {
 
 Route::get('detail/{id}', function (string $id) {
     return view('pages.detail', [
-        'toko' => App\Models\Toko::with('user')->find($id),
+        'toko' => App\Models\Toko::with(['user', 'perbaikans'])->find($id),
     ]);
 });
 

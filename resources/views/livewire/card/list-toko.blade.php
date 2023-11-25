@@ -1,21 +1,21 @@
 <section class="{{$class}}">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
         <div class="mx-auto mb-8 lg:mb-12">
-            <h3 class="mb-4 text-md md:text-3xl tracking-tight font-bold text-gray-900 dark:text-white">{{$heading}}</h3>
+            <h3 class="mb-4 text-xl md:text-3xl tracking-tight font-bold text-gray-900 dark:text-white">{{$heading}}</h3>
             <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-200">{{$subheading}}</p>
 
-            <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400" id="{{$id}}-list-tab" data-tabs-toggle="#{{$id}}-list-tab-content" role="tablist">
+            <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-500" id="{{$id}}-list-tab" data-tabs-toggle="#{{$id}}-list-tab-content" role="tablist">
+                @php
+                    $i = 1;
+                @endphp
                 @foreach ($items as $key => $item)
                     <li class="me-2" role="presentation">
-                        <button class="border border-gray-500 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 active" id="{{$id}}-{{$key}}-tab" data-tabs-target="#{{$id}}-{{$key}}" type="button" role="tab" aria-controls="{{$id}}-{{$key}}" aria-selected="false">{{str_replace('-',' ',ucfirst($key))}}</button>
+                        <button class="{{ ($i == 1)? 'active' : '' }} border border-gray-500 hover:text-white hover:bg-primary-600 hover:bg-opacity-100 hover:border-primary-600 duration-150 ease-in font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2" id="{{$id}}-{{$key}}-tab" data-tabs-target="#{{$id}}-{{$key}}" onclick="activeClass(this)" type="button" role="tab" aria-controls="{{$id}}-{{$key}}" aria-selected="false">{{str_replace('-',' ',ucfirst($key))}}</button>
                     </li>
+                    @php
+                        $i++
+                    @endphp
                 @endforeach
-                {{-- <li class="me-2" role="presentation">
-                    <button  class="border border-gray-500 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2" id="{{$id}}-abepura-tab" data-tabs-target="#{{$id}}-abepura" type="button" role="tab" aria-controls="{{$id}}-abepura" aria-selected="false">Abepura</button>
-                </li>
-                <li class="me-2" role="presentation">
-                    <button class="border border-gray-500 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2" id="{{$id}}-heram-tab" data-tabs-target="#{{$id}}-heram" type="button" role="tab" aria-controls="{{$id}}-heram" aria-selected="false" aria-selected="text-primary-600 bg-primary-600 bg-opacity-10 border-primary-600">Heram</button>
-                </li> --}}
             </ul>
         </div> 
         <div id="list-tab-content">
@@ -52,10 +52,6 @@
                     @endforeach
                 </div>
             @endforeach
-
-
-            <div class="hidden" id="{{$id}}-abepura" role="tabpanel" aria-labelledby="{{$id}}-abepura-tab">abe</div>
-            <div class="hidden" id="{{$id}}-heram" role="tabpanel" aria-labelledby="{{$id}}-heram-tab">heram</div>
         </div>
         <div class="flex items-center justify-center">
             <button type="button" class="text-white bg-primary-500 hover:bg-primary-400 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-primary-500 dark:hover:bg-primary-400">
@@ -67,3 +63,19 @@
         </div>
     </div>
 </section>
+
+@section('script')
+<script>
+    function activeClass(param) {
+        parrent = param.parentNode.parentNode;
+        allButton = parrent.getElementsByTagName("button");
+
+        for (var i = 0; i < allButton.length; i++) {
+            allButton[i].classList.remove('active');
+        }
+
+        param.classList.add('active');
+    }
+</script>
+    
+@endsection

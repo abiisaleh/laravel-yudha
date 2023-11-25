@@ -32,7 +32,6 @@ class PerbaikanResource extends Resource
                     ->numeric()
                     ->required(),
                 Forms\Components\FileUpload::make('gambar')
-                    ->required()
                     ->image()
                     ->disabledOn('edit'),
                 Forms\Components\Textarea::make('detail_kerusakan')

@@ -49,7 +49,7 @@ class CreatePerbaikan extends Component implements HasForms
     {
         $data = $this->form->getState();
         $data['toko_id'] = $this->tokoId;
-        $data['user_id'] = auth()->id;
+        $data['user_id'] = auth()->id();
         Perbaikan::create($data);
     }
 
