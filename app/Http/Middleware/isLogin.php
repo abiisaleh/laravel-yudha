@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserPanelRedirect
+class isLogin
 {
     /**
      * Handle an incoming request.
@@ -15,12 +15,10 @@ class UserPanelRedirect
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role == 'pelanggan') {
-            if (!in_array(url()->current(), [filament()->getLogoutUrl(), filament()->getProfileUrl()]))
-                return redirect('user');
-        } elseif (in_array(auth()->user()->role, ['teknisi', 'distributor'])) {
-            return redirect('app');
-        }
+        if (!auth()->check())
+            return redirect('admin/login');
+        if (!auth()->user()->role == 'pelanggan')
+            abort(401);
 
         return $next($request);
     }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\isLogin;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,7 +53,7 @@ Route::post('search', function (Request $request) {
 
 Route::get('user', function () {
     return view('pages.user-dashboard');
-})->name('dashboard');
+})->name('dashboard')->middleware(isLogin::class);
 
 Route::get('user/notifikasi', function () {
     return view('pages.user-notifikasi');

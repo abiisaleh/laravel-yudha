@@ -44,7 +44,7 @@ class PelangganResource extends Resource
                 TextColumn::make('created_at')
                     ->date()
                     ->sortable(),
-                ToggleColumn::make('verivied'),
+                ToggleColumn::make('verified'),
             ])
             ->filters([
                 Filter::make('verivied')->toggle(),

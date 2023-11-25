@@ -5,15 +5,17 @@
             <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-200">{{$subheading}}</p>
 
             <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 dark:text-gray-400" id="{{$id}}-list-tab" data-tabs-toggle="#{{$id}}-list-tab-content" role="tablist">
-                <li class="me-2" role="presentation">
-                    <button class="border border-gray-500 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 active" id="{{$id}}-semua-tab" data-tabs-target="#{{$id}}-semua" type="button" role="tab" aria-controls="{{$id}}-semua" aria-selected="false">Semua</button>
-                </li>
-                <li class="me-2" role="presentation">
+                @foreach ($items as $key => $item)
+                    <li class="me-2" role="presentation">
+                        <button class="border border-gray-500 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 active" id="{{$id}}-{{$key}}-tab" data-tabs-target="#{{$id}}-{{$key}}" type="button" role="tab" aria-controls="{{$id}}-{{$key}}" aria-selected="false">{{str_replace('-',' ',ucfirst($key))}}</button>
+                    </li>
+                @endforeach
+                {{-- <li class="me-2" role="presentation">
                     <button  class="border border-gray-500 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2" id="{{$id}}-abepura-tab" data-tabs-target="#{{$id}}-abepura" type="button" role="tab" aria-controls="{{$id}}-abepura" aria-selected="false">Abepura</button>
                 </li>
                 <li class="me-2" role="presentation">
                     <button class="border border-gray-500 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2" id="{{$id}}-heram-tab" data-tabs-target="#{{$id}}-heram" type="button" role="tab" aria-controls="{{$id}}-heram" aria-selected="false" aria-selected="text-primary-600 bg-primary-600 bg-opacity-10 border-primary-600">Heram</button>
-                </li>
+                </li> --}}
             </ul>
         </div> 
         <div id="list-tab-content">
