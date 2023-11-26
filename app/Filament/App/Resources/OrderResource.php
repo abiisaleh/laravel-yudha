@@ -7,6 +7,7 @@ use App\Filament\App\Resources\OrderResource\RelationManagers;
 use App\Models\Barang;
 use App\Models\Order;
 use App\Models\OrderBarang;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
@@ -126,8 +127,13 @@ class OrderResource extends Resource
 
     public static function table(Table $table): Table
     {
+        if (auth()->user()->role == 'teknisi')
+            $query = Order::query()->where('user_id', auth()->id());
+        else
+            $query = Order::query()->where('toko_id', Filament::getTenant()->id);
+
         return $table
-            ->query(Order::query()->where('user_id', auth()->id()))
+            ->query($query)
             ->columns([
                 Tables\Columns\TextColumn::make('toko.nama')
                     ->numeric()
