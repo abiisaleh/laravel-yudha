@@ -147,10 +147,8 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('lunas')
-                    ->boolean(),
-                Tables\Columns\ToggleColumn::make('diterima')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('lunas'),
+                Tables\Columns\ToggleColumn::make('diterima'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->since()
                     ->sortable(),
