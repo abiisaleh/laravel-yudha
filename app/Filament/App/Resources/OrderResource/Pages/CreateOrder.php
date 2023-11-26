@@ -18,13 +18,6 @@ class CreateOrder extends CreateRecord
 
         $record = new ($this->getModel())($data);
 
-        if (
-            static::getResource()::isScopedToTenant() &&
-            ($tenant = Filament::getTenant())
-        ) {
-            return $this->associateRecordWithTenant($record, $tenant);
-        }
-
         $record->save();
 
         return $record;

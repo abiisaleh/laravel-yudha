@@ -24,6 +24,8 @@ class PelangganResource extends Resource
 
     protected static ?string $pluralLabel = 'Pelanggan';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -43,11 +45,12 @@ class PelangganResource extends Resource
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->date()
+                    ->since()
                     ->sortable(),
                 ToggleColumn::make('verified'),
             ])
             ->filters([
-                Filter::make('verivied')->toggle(),
+                Filter::make('verified'),
             ])
             ->actions([
                 //

@@ -40,10 +40,6 @@ class ListPerbaikan extends Component implements HasForms, HasTable
                 TextColumn::make('toko.nama'),
                 TextColumn::make('detail_kerusakan')
                     ->limit(30),
-                IconColumn::make('lunas')
-                    ->boolean(),
-                IconColumn::make('selesai')
-                    ->boolean(),
             ])
             ->filters([
                 // ...

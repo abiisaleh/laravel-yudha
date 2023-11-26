@@ -22,7 +22,9 @@ class OrderBarangsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('barangs.nama'),
+                Tables\Columns\TextColumn::make('barangs.nama')
+                    ->inverseRelationship('barangs'),
+                // ->hidden(),
                 Tables\Columns\TextColumn::make('qty'),
                 Tables\Columns\TextColumn::make('harga')
                     ->numeric(),

@@ -31,6 +31,8 @@ class TeknisiResource extends Resource
 
     protected static ?string $pluralLabel = 'Teknisi';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -82,7 +84,7 @@ class TeknisiResource extends Resource
                 TextColumn::make('nama')->searchable(),
                 TextColumn::make('kecamatan')->searchable(),
                 TextColumn::make('kelurahan')->searchable(),
-                TextColumn::make('user.email')->searchable(),
+                TextColumn::make('user.email')->searchable()->copyable(),
             ])
             ->filters([
                 //

@@ -5,6 +5,8 @@ namespace App\Filament\App\Resources;
 use App\Filament\App\Resources\PerbaikanResource\Pages;
 use App\Filament\Resources\PerbaikanResource\RelationManagers;
 use App\Models\Perbaikan;
+use App\Models\User;
+use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -55,7 +57,7 @@ class PerbaikanResource extends Resource
                 Tables\Columns\ToggleColumn::make('lunas'),
                 Tables\Columns\ToggleColumn::make('selesai'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->since()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -87,5 +89,15 @@ class PerbaikanResource extends Resource
     public static function canViewAny(): bool
     {
         return auth()->user()->role == 'teknisi';
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        $dataCount = static::getModel()::where('toko_id', Filament::getTenant()->id)->where('selesai', false)->count();
+
+        if ($dataCount == 0)
+            return null;
+
+        return $dataCount;
     }
 }

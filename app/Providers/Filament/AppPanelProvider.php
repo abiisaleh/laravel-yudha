@@ -4,6 +4,8 @@ namespace App\Providers\Filament;
 
 use App\Filament\App\Pages\Tenancy\EditTeam;
 use App\Filament\App\Pages\Tenancy\RegisterTeam;
+use App\Filament\App\Resources\OrderResource\Widgets\OrderOverview;
+use App\Filament\App\Resources\PerbaikanResource\Widgets\PerbaikanOverview;
 use App\Models\Toko;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -44,8 +46,8 @@ class AppPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                PerbaikanOverview::class,
+                OrderOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,
