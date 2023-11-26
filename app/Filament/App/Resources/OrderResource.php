@@ -127,27 +127,39 @@ class OrderResource extends Resource
 
     public static function table(Table $table): Table
     {
-        if (auth()->user()->role == 'teknisi')
+        if (auth()->user()->role == 'teknisi') {
             $query = Order::query()->where('user_id', auth()->id());
-        else
-            $query = Order::query()->where('toko_id', Filament::getTenant()->id);
-
-        return $table
-            ->query($query)
-            ->columns([
+            $collumn = [
                 Tables\Columns\TextColumn::make('toko.nama')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('lunas')
-                    ->boolean()
-                    ->visible(auth()->user()->role == 'teknisi'),
+                    ->boolean(),
                 Tables\Columns\IconColumn::make('diterima')
-                    ->boolean()
-                    ->visible(auth()->user()->role == 'teknisi'),
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->since()
                     ->sortable(),
-            ])
+            ];
+        } else {
+            $query = Order::query()->where('toko_id', Filament::getTenant()->id);
+            $collumn = [
+                Tables\Columns\TextColumn::make('user.name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\ToggleColumn::make('lunas')
+                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('diterima')
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->since()
+                    ->sortable(),
+            ];
+        }
+
+        return $table
+            ->query($query)
+            ->columns($collumn)
             ->filters([
                 //
             ])
