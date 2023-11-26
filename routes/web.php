@@ -46,8 +46,15 @@ Route::get('detail/{id}', function (string $id) {
 
 Route::post('search', function (Request $request) {
     return view('pages.search', [
-        'toko' => App\Models\Toko::where('jenis', 'teknisi')->where('nama', 'like', '%' . $request->input('keyword') . '%')->get(),
-        'keyword' => $request->input('keyword')
+        'keyword' => $request->input('keyword'),
+        'toko' => [
+            'semua' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->where('jenis', 'teknisi')->where('nama', 'like', '%' . $request->input('keyword') . '%')->orderBy('perbaikans_avg_rating', 'desc')->get(),
+            'abepura' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('abepura')->where('nama', 'like', '%' . $request->input('keyword') . '%')->orderBy('perbaikans_avg_rating', 'desc')->get(),
+            'heram' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('heram')->where('nama', 'like', '%' . $request->input('keyword') . '%')->orderBy('perbaikans_avg_rating', 'desc')->get(),
+            'jayapura-utara' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('jayapura utara')->where('nama', 'like', '%' . $request->input('keyword') . '%')->orderBy('perbaikans_avg_rating', 'desc')->get(),
+            'jayapura-selatan' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('jayapura selatan')->where('nama', 'like', '%' . $request->input('keyword') . '%')->orderBy('perbaikans_avg_rating', 'desc')->get(),
+            'muara-tami' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('muara tami')->where('nama', 'like', '%' . $request->input('keyword') . '%')->orderBy('perbaikans_avg_rating', 'desc')->get(),
+        ],
     ]);
 })->name('search');
 
