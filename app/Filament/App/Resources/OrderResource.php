@@ -94,6 +94,7 @@ class OrderResource extends Resource
                                 $barang = Barang::find($state);
                                 if ($barang) {
                                     $set('harga', $barang->harga);
+                                    $set('barang', $barang->nama);
                                 }
                             })
                             ->live()
@@ -117,6 +118,8 @@ class OrderResource extends Resource
                         Forms\Components\TextInput::make('subtotal')
                             ->prefix('Rp')
                             ->disabled()
+                            ->dehydrated(),
+                        Forms\Components\Hidden::make('barang')
                             ->dehydrated(),
                     ])
                     ->visibleOn('create')

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Barang::class)->constrained();
             $table->foreignIdFor(Order::class)->constrained();
+            $table->string('barang');
             $table->integer('qty')->default(1);
             $table->integer('harga');
             $table->integer('subtotal');
