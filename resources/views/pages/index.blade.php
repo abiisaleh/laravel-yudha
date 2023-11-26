@@ -6,7 +6,7 @@
             <div class="py-16 px-4 mx-auto max-w-screen-xl text-center lg:py-32">
                 <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Sistem Informasi <br><span class="text-primary-500">Jasa Service Handphone</span></h1>
                 <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-200">Mudahkan Perbaikan dengan <b>Akses Luas</b> ke Berbagai Service Center.</p>
-                <form action="{{route('search')}}" method="post" class="w-full max-w-md mx-auto"> 
+                <form action="{{route('search')}}" method="get" class="w-full max-w-md mx-auto"> 
                     @csrf  
                     <div class="relative">
                         <input type="text" id="cari" class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-full bg-white focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="keyword" placeholder="Enter your keyword..." required>
@@ -167,21 +167,54 @@
                 </div> 
             </div>
         </section>
-          
-        @livewire('card.list-toko',[
-            'items' => $terbaik,
-            'id' => 'terbaik',
-            'class' => 'bg-primary-50 dark:bg-gray-800',
-            'heading' => 'Service center terbaik! 🏆🤩',
-        ])
 
+        <section class="bg-primary-50 dark:bg-gray-800">
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+            
+                    <div class="mx-auto mb-8 lg:mb-12">
+                        <h3 class="mb-4 text-xl md:text-3xl tracking-tight font-bold text-gray-900 dark:text-white">Service center terbaik! 🏆🤩</h3>
+            
+                        @livewire('card.list-toko',[
+                                'items' => $terbaik,
+                                'id' => 'terbaik',
+                            ])
+            
+                    <div class="flex items-center justify-center">
+                        <a href="{{route('terbaik')}}" class="text-white bg-primary-500 hover:bg-primary-400 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-primary-500 dark:hover:bg-primary-400">
+                            Selengkapnya
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg>
+                        </a>  
+                    </div>
+            
+                </div>
+        </section>
 
-        @livewire('card.list-toko',[
-            'items' => $populer,
-            'id' => 'populer',
-            'heading' => 'Paling banyak dikunjungi!',
-            'subheading' => 'Service center polpuler yang selalu rame.',
-        ])
+        <section class="bg-white dark:bg-gray-900">
+                <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+            
+                    <div class="mx-auto mb-8 lg:mb-12">
+                        <h3 class="mb-4 text-xl md:text-3xl tracking-tight font-bold text-gray-900 dark:text-white">Paling banyak dikunjungi!</h3>
+                        <p class="mb-8 text-sm font-normal text-gray-500 md:text-xl dark:text-gray-200">Service center polpuler yang selalu rame.</p>
+
+            
+                        @livewire('card.list-toko',[
+                                'items' => $populer,
+                                'id' => 'populer',
+                        ])
+            
+                    <div class="flex items-center justify-center">
+                        <a href="{{route('terbaik')}}" class="text-white bg-primary-500 hover:bg-primary-400 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-primary-500 dark:hover:bg-primary-400">
+                            Selengkapnya
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg>
+                        </a>  
+                    </div>
+            
+                </div>
+        </section>
 
 @endsection
 
