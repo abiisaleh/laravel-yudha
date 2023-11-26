@@ -1,8 +1,10 @@
 <div>
     <form wire:submit="create">
         {{ $this->form }}
-
-        {{ $this->createAction }}
+        
+        <div class="mt-4">
+            {{ $this->createAction }}
+        </div>
     </form>
     
     <x-filament-actions::modals />

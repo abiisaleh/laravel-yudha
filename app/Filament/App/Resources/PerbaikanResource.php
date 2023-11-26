@@ -9,6 +9,7 @@ use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -54,8 +55,24 @@ class PerbaikanResource extends Resource
                 Tables\Columns\TextColumn::make('biaya')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\ToggleColumn::make('lunas'),
-                Tables\Columns\ToggleColumn::make('selesai'),
+                Tables\Columns\ToggleColumn::make('lunas')
+                    ->afterStateUpdated(function (Perbaikan $record) {
+                        $recipient = $record->user()->get();
+
+                        Notification::make()
+                            ->success()
+                            ->title('Pembayaran lunas')
+                            ->sendToDatabase($recipient);
+                    }),
+                Tables\Columns\ToggleColumn::make('selesai')
+                    ->afterStateUpdated(function (Perbaikan $record) {
+                        $recipient = $record->user()->get();
+
+                        Notification::make()
+                            ->success()
+                            ->title('Perbaikan telah selesai')
+                            ->sendToDatabase($recipient);
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->since()
                     ->sortable()
@@ -69,7 +86,15 @@ class PerbaikanResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->after(function (Perbaikan $record) {
+                        $recipient = $record->user()->get();
+
+                        Notification::make()
+                            ->info()
+                            ->title('Pesanmu telah diterima')
+                            ->sendToDatabase($recipient);
+                    }),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

@@ -8,6 +8,7 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
@@ -15,6 +16,8 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Filament\Support\Enums\ActionSize;
 use IbrahimBougaoua\FilamentRatingStar\Actions\RatingStar;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -37,10 +40,8 @@ class CreatePerbaikan extends Component implements HasForms, HasActions
     {
         return $form
             ->schema([
-                TextInput::make('email')
-                    ->default(auth()->user()->email ?? null)
-                    ->email()
-                    ->required(),
+                Hidden::make('email')
+                    ->default(auth()->user()->email ?? null),
                 FileUpload::make('gambar'),
                 Textarea::make('detail_kerusakan')
                     ->rows(5),
@@ -55,14 +56,24 @@ class CreatePerbaikan extends Component implements HasForms, HasActions
         $data['toko_id'] = $this->tokoId;
         $data['user_id'] = auth()->id();
         Perbaikan::create($data);
+
+        $this->form->fill();
+
+        Notification::make()
+            ->title('Success')
+            ->success()
+            ->send();
     }
 
     protected function createAction()
     {
         return ActionsAction::make('create')
-            ->label(__('filament-panels::resources/pages/create-record.form.actions.create.label'))
+            ->label('Submit')
             ->submit('create')
-            ->sendSuccessNotification()
+            ->size(ActionSize::Large)
+            ->extraAttributes([
+                'class' => 'w-full',
+            ])
             ->keyBindings(['mod+s']);
     }
 
