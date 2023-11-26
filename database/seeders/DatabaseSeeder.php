@@ -60,5 +60,10 @@ class DatabaseSeeder extends Seeder
                 ])->id,
             ],
         ]);
+
+        $this->call([
+            TeknisiSeeder::class,
+            BarangSeeder::class,
+        ]);
     }
 }
