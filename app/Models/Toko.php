@@ -8,6 +8,7 @@ use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class Toko extends Model implements HasName
 {
@@ -36,5 +37,10 @@ class Toko extends Model implements HasName
     public function getFilamentName(): string
     {
         return "{$this->nama}";
+    }
+
+    public function scopeKecamatan($query, $kecamatan)
+    {
+        return $query->where('jenis', 'teknisi')->where('kecamatan', $kecamatan);
     }
 }

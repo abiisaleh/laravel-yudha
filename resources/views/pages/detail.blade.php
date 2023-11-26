@@ -29,8 +29,8 @@
 
                 <p class="mb-8 mt-4 font-normal text-gray-500 dark:text-gray-200">📍 {{$toko->alamat}}, Kel. {{$toko->kelurahan}}, Kec. {{$toko->kecamatan}}</p>
                 
-                @foreach ($toko->perbaikans as $item)
-                <article class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+                @foreach ($toko->perbaikans->where('rating','!=',null) as $item)
+                <article class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800 mb-2">
                     <div class="flex items-center mb-4">
                         <img class="w-10 h-10 me-4 rounded-full" src="{{filament()->getUserAvatarUrl($item->user)}}" alt="">
                         <div class="font-medium dark:text-white">

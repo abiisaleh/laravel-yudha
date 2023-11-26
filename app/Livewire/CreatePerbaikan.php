@@ -3,6 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Perbaikan;
+use Filament\Actions\Action as ActionsAction;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
@@ -16,8 +19,9 @@ use IbrahimBougaoua\FilamentRatingStar\Actions\RatingStar;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class CreatePerbaikan extends Component implements HasForms
+class CreatePerbaikan extends Component implements HasForms, HasActions
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     public $tokoId;
@@ -51,6 +55,15 @@ class CreatePerbaikan extends Component implements HasForms
         $data['toko_id'] = $this->tokoId;
         $data['user_id'] = auth()->id();
         Perbaikan::create($data);
+    }
+
+    protected function createAction()
+    {
+        return ActionsAction::make('create')
+            ->label(__('filament-panels::resources/pages/create-record.form.actions.create.label'))
+            ->submit('create')
+            ->sendSuccessNotification()
+            ->keyBindings(['mod+s']);
     }
 
     public function render()

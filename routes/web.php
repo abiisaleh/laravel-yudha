@@ -20,20 +20,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.index', [
         'terbaik' => [
-            'semua' => App\Models\Toko::where('jenis', 'teknisi')->take(4)->get(),
-            'abepura' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'abepura')->take(4)->get(),
-            'heram' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'heram')->take(4)->get(),
-            'jayapura-utara' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'jayapura utara')->take(4)->get(),
-            'jayapura-selatan' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'jayapura selatan')->take(4)->get(),
-            'muara-tami' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'muara tami')->take(4)->get(),
+            'semua' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->where('jenis', 'teknisi')->orderBy('perbaikans_avg_rating', 'desc')->take(4)->get(),
+            'abepura' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('abepura')->orderBy('perbaikans_avg_rating', 'desc')->take(4)->get(),
+            'heram' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('heram')->orderBy('perbaikans_avg_rating', 'desc')->take(4)->get(),
+            'jayapura-utara' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('jayapura utara')->orderBy('perbaikans_avg_rating', 'desc')->take(4)->get(),
+            'jayapura-selatan' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('jayapura selatan')->orderBy('perbaikans_avg_rating', 'desc')->take(4)->get(),
+            'muara-tami' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('muara tami')->orderBy('perbaikans_avg_rating', 'desc')->take(4)->get(),
         ],
         'populer' => [
-            'semua' => App\Models\Toko::where('jenis', 'teknisi')->take(4)->get(),
-            'abepura' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'abepura')->take(4)->get(),
-            'heram' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'heram')->take(4)->get(),
-            'jayapura-utara' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'jayapura utara')->take(4)->get(),
-            'jayapura-selatan' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'jayapura selatan')->take(4)->get(),
-            'muara-tami' => App\Models\Toko::where('jenis', 'teknisi')->where('kecamatan', 'muara tami')->take(4)->get(),
+            'semua' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->where('jenis', 'teknisi')->take(4)->get(),
+            'abepura' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('abepura')->orderBy('perbaikans_count', 'desc')->take(4)->get(),
+            'heram' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('heram')->orderBy('perbaikans_count', 'desc')->take(4)->get(),
+            'jayapura-utara' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('jayapura utara')->orderBy('perbaikans_count', 'desc')->take(4)->get(),
+            'jayapura-selatan' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('jayapura selatan')->orderBy('perbaikans_count', 'desc')->take(4)->get(),
+            'muara-tami' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->kecamatan('muara tami')->orderBy('perbaikans_count', 'desc')->take(4)->get(),
         ],
     ]);
 });
