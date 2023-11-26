@@ -77,8 +77,6 @@ class BarangResource extends Resource
         } else {
             return $table
                 ->columns([
-                    Tables\Columns\ImageColumn::make('gambar')
-                        ->circular(),
                     Tables\Columns\TextColumn::make('nama')
                         ->searchable(),
                     Tables\Columns\TextColumn::make('harga')
