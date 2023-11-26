@@ -4,7 +4,7 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="gap-8 py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
             @if (is_null($toko->gambar))
-                <img class="w-full rounded-lg" src="/default.jpg" alt="image description">
+                <img class="w-full rounded-lg brightness-200 dark:filter-none" src="/default.jpg" alt="image description">
             @else
                 <img class="w-full rounded-lg" src="/{{$toko->gambar}}" alt="image description">  
             @endif
@@ -64,7 +64,7 @@
                 </svg>
                 <span class="sr-only">Info</span>
                 <div class="ms-3 text-sm font-medium">
-                  <a href="admin/login" class="font-semibold underline hover:no-underline">Login</a> untuk mendapatkan status perbaikan secara langsung
+                  <a href="/admin/login" class="font-semibold underline hover:no-underline">Login</a> untuk mendapatkan status perbaikan secara langsung
                 </div>
             </div>
             @elseif (auth()->user()->verified)

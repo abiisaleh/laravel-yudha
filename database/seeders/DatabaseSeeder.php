@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         DB::table('toko_user')->insert([
             [
                 'toko_id' => \App\Models\Toko::factory()->create([
-                    'nama' => 'Samsung Service Center',
+                    'nama' => 'Yudha Cell',
                     'jenis' => 'teknisi',
                     'alamat' => 'Jl. Raya Abepura, (Depan Kantor BPJS)',
                     'kecamatan' => 'Abepura',
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'toko_id' => \App\Models\Toko::factory()->create([
-                    'nama' => 'Salsa Cell',
+                    'nama' => 'Samsung Center Abepura',
                     'jenis' => 'distributor',
                     'alamat' => 'samping bank BTN Abepura',
                     'kecamatan' => 'Abepura',
