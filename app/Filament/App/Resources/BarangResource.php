@@ -53,8 +53,6 @@ class BarangResource extends Resource
             return $table
                 ->query(Barang::query())
                 ->columns([
-                    Tables\Columns\ImageColumn::make('gambar')
-                        ->circular(),
                     Tables\Columns\TextColumn::make('nama')
                         ->searchable(),
                     Tables\Columns\TextColumn::make('harga')
