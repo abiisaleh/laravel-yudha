@@ -2,9 +2,15 @@
 
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\isLogin;
+use App\Models\Order;
+use App\Models\Perbaikan;
+use App\Models\Toko;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -95,3 +101,33 @@ Route::get('user', function () {
 Route::get('user/perbaikan', function () {
     return view('pages.user.perbaikan');
 })->name('perbaikan');
+
+Route::get('print/{jenis}/{id}/{waktu}', function ($jenis, $id, $waktu) {
+
+    if ($jenis == 'order') {
+        $data = Order::withSum('orderBarangs', 'subtotal')->with('user')->where('toko_id', $id);
+        $total = $data->get()->sum('order_barangs_sum_subtotal');
+    } else if ($jenis == 'perbaikan') {
+        $data = Perbaikan::with('user')->where('toko_id', $id);
+        $total = $data->sum('biaya');
+    } else
+        abort(404);
+
+    $toko = Toko::with('user')->find($id);
+
+    if ($waktu == 'harian')
+        $data->whereDate('created_at', date('Y-m-d'));
+    if ($waktu == 'bulanan')
+        $data->whereMonth('created_at', date('m'));
+    if ($waktu == 'tahunan')
+        $data->whereYear('created_at', date('Y'));
+
+    $pdf = Pdf::loadView('print', [
+        'data' => $data->get(),
+        'total' => $total,
+        'toko' => $toko,
+        'waktu' => $waktu,
+    ]);
+
+    return $pdf->stream();
+})->name('print');

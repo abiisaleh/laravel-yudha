@@ -6,6 +6,9 @@ use App\Filament\App\Resources\PerbaikanResource\Pages;
 use App\Filament\Resources\PerbaikanResource\RelationManagers;
 use App\Models\Perbaikan;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+// use Barryvdh\DomPDF\PDF;
+// use Barryvdh\DomPDF\Facade as PDF;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -14,6 +17,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PerbaikanResource extends Resource
