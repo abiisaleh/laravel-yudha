@@ -26,7 +26,7 @@ class ListOrders extends ListRecords
                 ->icon('heroicon-m-printer')
                 ->color('primary')
                 ->button()
-            // ->hidden(auth()->user()->role == 'teknisi')
+                ->hidden(auth()->user()->role == 'teknisi')
         ];
     }
 }
