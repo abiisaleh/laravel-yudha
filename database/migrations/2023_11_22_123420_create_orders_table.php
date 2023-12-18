@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained();
-            $table->foreignIdFor(Toko::class)->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Toko::class)->nullable()->constrained()->nullOnDelete();
             $table->boolean('lunas')->default(false);
             $table->boolean('diterima')->default(false);
             $table->timestamps();

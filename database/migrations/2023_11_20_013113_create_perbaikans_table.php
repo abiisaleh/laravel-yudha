@@ -23,8 +23,8 @@ return new class extends Migration
             $table->boolean('selesai')->default(false);
             $table->integer('rating')->nullable();
             $table->text('comment')->nullable();
-            $table->foreignIdFor(User::class)->nullable()->constrained();
-            $table->foreignIdFor(Toko::class)->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Toko::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

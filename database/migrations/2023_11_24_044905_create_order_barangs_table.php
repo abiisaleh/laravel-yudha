@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('order_barang', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Barang::class)->constrained();
-            $table->foreignIdFor(Order::class)->constrained();
+            $table->foreignIdFor(Barang::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Order::class)->nullable()->constrained()->cascadeOnDelete();
             $table->string('barang');
             $table->integer('qty')->default(1);
             $table->integer('harga');
