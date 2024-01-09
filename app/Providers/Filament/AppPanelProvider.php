@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\App\Pages\Auth\Register as AuthRegister;
 use App\Filament\App\Pages\Tenancy\EditTeam;
 use App\Filament\App\Pages\Tenancy\RegisterTeam;
 use App\Filament\App\Resources\OrderResource\Widgets\OrderOverview;
@@ -33,8 +34,9 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->profile()
-            ->registration()
+            ->registration(AuthRegister::class)
             ->tenant(Toko::class)
+            ->tenantRegistration(RegisterTeam::class)
             ->tenantProfile(EditTeam::class)
             ->colors([
                 'primary' => Color::Amber,

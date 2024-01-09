@@ -11,24 +11,24 @@ use Filament\Support\Facades\FilamentView;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-      /** FilamentView::registerRenderHook(
-      *  'panels::body.start', 
-      *  fn (): string => Blade::render('@livewire(\'registration-link\')'),
-      ); 
-      */
-    }
+  /**
+   * Register any application services.
+   */
+  public function register(): void
+  {
+    //
+  }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        Model::unguard();
-        $this->app->bind(LogoutResponseContract::class, MyLogoutResponse::class);
-    }
+  /**
+   * Bootstrap any application services.
+   */
+  public function boot(): void
+  {
+    FilamentView::registerRenderHook(
+      'panels::auth.login.form.after',
+      fn (): string => Blade::render('@livewire(\'registration-link\')'),
+    );
+    Model::unguard();
+    $this->app->bind(LogoutResponseContract::class, MyLogoutResponse::class);
+  }
 }
