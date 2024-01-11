@@ -70,6 +70,7 @@ class TeknisiSeeder extends Seeder
                     'user_id' => \App\Models\User::factory()->create([
                         'password' => 'demo1234',
                         'role' => 'teknisi',
+                        'verified' => true,
                     ])->id,
                 ],
             ]);

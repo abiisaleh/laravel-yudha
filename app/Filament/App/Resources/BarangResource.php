@@ -40,6 +40,9 @@ class BarangResource extends Resource
                     ->required()
                     ->prefix('Rp')
                     ->numeric(),
+                Forms\Components\TextInput::make('stok')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\Textarea::make('deskripsi')
                     ->required()
                     ->maxLength(65535)
@@ -54,8 +57,22 @@ class BarangResource extends Resource
                 ->query(Barang::query())
                 ->columns([
                     Tables\Columns\TextColumn::make('nama')
+                        ->limit(50)
+                        ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
+                            $state = $column->getState();
+                     
+                            if (strlen($state) <= $column->getCharacterLimit()) {
+                                return null;
+                            }
+                     
+                            // Only render the tooltip if the column content exceeds the length limit.
+                            return $state;
+                        })
                         ->searchable(),
                     Tables\Columns\TextColumn::make('harga')
+                        ->numeric()
+                        ->sortable(),
+                    Tables\Columns\TextColumn::make('stok')
                         ->numeric()
                         ->sortable(),
                     Tables\Columns\TextColumn::make('toko.nama')

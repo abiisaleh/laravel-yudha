@@ -84,11 +84,19 @@ class OrderResource extends Resource
                     ->live(),
                 Forms\Components\Repeater::make('orderBarangs')
                     ->relationship()
+                    ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                        //mengurangi stok barang
+                        $barang = Barang::find($data['barang_id']);
+                        $barang->stok -= $data['qty'];
+                        $barang->save();
+
+                        return $data;
+                    })
                     ->schema([
                         Forms\Components\Select::make('barang_id')
                             ->native(false)
                             ->searchable()
-                            ->options(fn (Barang $query, Get $get) => $query->where('toko_id', $get('../../toko_id'))->pluck('nama', 'id'))
+                            ->options(fn (Barang $query, Get $get) => $query->where('toko_id', $get('../../toko_id'))->where('stok', '>', 0)->pluck('nama', 'id'))
                             ->required()
                             ->afterStateUpdated(function (Set $set, $state) {
                                 $barang = Barang::find($state);
@@ -105,7 +113,8 @@ class OrderResource extends Resource
                             ->dehydrated(),
                         Forms\Components\TextInput::make('qty')
                             ->default(0)
-                            ->minValue(0)
+                            ->minValue(1)
+                            ->maxValue(fn (Barang $query, Get $get) =>  $query->find($get('barang_id'))->stok ?? 0)
                             ->required()
                             ->afterStateUpdated(function (Set $set, Get $get, $state) {
                                 $barang = Barang::find($get('barang_id'));

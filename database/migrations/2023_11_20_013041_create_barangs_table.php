@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('harga');
             $table->string('gambar')->nullable();
             $table->text('deskripsi');
+            $table->integer('stok')->default(1);
             $table->foreignIdFor(Toko::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

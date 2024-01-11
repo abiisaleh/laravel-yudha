@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'eko wahyu',
             'email' => 'ekowahyu@demo.com',
             'password' => 'demo1234',
+            'verified' => true,
         ]);
 
         \App\Models\User::factory()->create([
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'abiisaleh@demo.com',
             'password' => 'demo1234',
             'role' => 'admin',
+            'verified' => true,
         ]);
 
         DB::table('toko_user')->insert([
@@ -42,6 +44,7 @@ class DatabaseSeeder extends Seeder
                     'email' => 'yudha@demo.com',
                     'password' => 'demo1234',
                     'role' => 'teknisi',
+                    'verified' => true,
                 ])->id,
             ],
             [
@@ -57,6 +60,7 @@ class DatabaseSeeder extends Seeder
                     'email' => 'syafiq@demo.com',
                     'password' => 'demo1234',
                     'role' => 'distributor',
+                    'verified' => true,
                 ])->id,
             ],
         ]);
