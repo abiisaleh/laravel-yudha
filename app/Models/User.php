@@ -68,6 +68,12 @@ class User extends Authenticatable implements HasTenants
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role != 'pelanggan';
+        if ($this->role == 'admin')
+            return true;
+
+        if ($this->role != 'pelanggan' && $this->verified)
+            return true;
+
+        return false;
     }
 }

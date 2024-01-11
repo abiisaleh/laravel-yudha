@@ -12,6 +12,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
@@ -85,6 +86,7 @@ class TeknisiResource extends Resource
                 TextColumn::make('kecamatan')->searchable(),
                 TextColumn::make('kelurahan')->searchable(),
                 TextColumn::make('user.email')->searchable()->copyable(),
+                ToggleColumn::make('user.verified')->label('Verified'),
             ])
             ->filters([
                 //

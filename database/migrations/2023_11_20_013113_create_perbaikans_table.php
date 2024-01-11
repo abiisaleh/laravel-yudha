@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('gambar')->nullable();
             $table->text('detail_kerusakan');
+            $table->text('hasil_pemeriksaan');
             $table->integer('biaya')->nullable();
             $table->boolean('lunas')->default(false);
             $table->boolean('selesai')->default(false);

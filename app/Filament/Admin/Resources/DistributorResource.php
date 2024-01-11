@@ -17,6 +17,7 @@ use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -82,6 +83,7 @@ class DistributorResource extends Resource
                 TextColumn::make('kecamatan')->searchable(),
                 TextColumn::make('kelurahan')->searchable(),
                 TextColumn::make('user.email')->searchable(),
+                ToggleColumn::make('user.verified')->label('Verified'),
             ])
             ->filters([
                 //
