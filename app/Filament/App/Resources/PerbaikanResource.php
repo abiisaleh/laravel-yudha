@@ -7,8 +7,6 @@ use App\Filament\Resources\PerbaikanResource\RelationManagers;
 use App\Models\Perbaikan;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
-// use Barryvdh\DomPDF\PDF;
-// use Barryvdh\DomPDF\Facade as PDF;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -44,6 +42,10 @@ class PerbaikanResource extends Resource
                 Forms\Components\Textarea::make('detail_kerusakan')
                     ->required()
                     ->disabledOn('edit'),
+                Forms\Components\Textarea::make('hasil_pemeriksaan')
+                    ->required()
+                    ->hiddenOn('create')
+                    ->columnSpanFull(),
             ]);
     }
 
