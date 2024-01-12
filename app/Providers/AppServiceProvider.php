@@ -24,10 +24,6 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
-    FilamentView::registerRenderHook(
-      'panels::auth.login.form.after',
-      fn (): string => Blade::render('@livewire(\'registration-link\')'),
-    );
     Model::unguard();
     $this->app->bind(LogoutResponseContract::class, MyLogoutResponse::class);
   }
