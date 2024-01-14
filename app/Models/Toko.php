@@ -43,4 +43,9 @@ class Toko extends Model implements HasName
     {
         return $query->where('jenis', 'teknisi')->where('kecamatan', $kecamatan);
     }
+
+    public function scopeVerified($query)
+    {
+        return $query->whereHas('user', fn (Builder $query) => $query->where('verified', true));
+    }
 }
