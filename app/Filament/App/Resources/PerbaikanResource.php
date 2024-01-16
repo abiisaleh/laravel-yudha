@@ -61,6 +61,8 @@ class PerbaikanResource extends Resource
                 Tables\Columns\TextColumn::make('biaya')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\IconColumn::make('setuju')
+                    ->boolean(),
                 Tables\Columns\ToggleColumn::make('lunas')
                     ->afterStateUpdated(function (Perbaikan $record) {
                         $recipient = $record->user()->get();
@@ -95,10 +97,13 @@ class PerbaikanResource extends Resource
                 Tables\Actions\EditAction::make()
                     ->after(function (Perbaikan $record) {
                         $recipient = $record->user()->get();
+                        $toko = $record->first()->nama;
+                        $biaya = $record->biaya;
 
                         Notification::make()
                             ->info()
-                            ->title('Pesanmu telah diterima')
+                            ->title('Konfirmasi pesananmu')
+                            ->body('Biaya pesananmu dari toko '.$toko.' sebesar Rp. '.number_format($biaya))
                             ->sendToDatabase($recipient);
                     }),
                 Tables\Actions\DeleteAction::make(),

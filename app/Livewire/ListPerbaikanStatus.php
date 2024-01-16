@@ -3,11 +3,18 @@
 namespace App\Livewire;
 
 use App\Models\Perbaikan;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Actions\Action as ActionsAction;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
@@ -36,6 +43,9 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
                     ->date('d/m/yy')
                     ->label('Dikirim'),
                 TextColumn::make('toko.nama'),
+                TextColumn::make('biaya')
+                    ->numeric()
+                    ->prefix('Rp. '),
                 IconColumn::make('lunas')
                     ->boolean(),
                 IconColumn::make('selesai')
@@ -45,8 +55,48 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
+                EditAction::make('View')
+                    ->icon('heroicon-m-eye')
+                    ->color('gray')
+                    ->form([
+                        Grid::make()
+                            ->schema([
+                                Placeholder::make('toko')
+                                    ->content(fn (Perbaikan $record) => $record->toko()->first()->nama .', '. $record->toko()->first()->alamat ),
+                                Placeholder::make('detail_kerusakan')
+                                    ->content(fn (Perbaikan $record) => $record->detail_kerusakan),
+                            ]),
+                        Grid::make()
+                            ->schema([
+                                Placeholder::make('biaya')
+                                    ->content(fn (Perbaikan $record) => 'Rp. '.number_format($record->biaya)),
+                                Placeholder::make('hasil_pemeriksaan')
+                                    ->content(fn (Perbaikan $record) => $record->hasil_pemeriksaan),
+                                Radio::make('setuju')
+                                    ->boolean(),
+                            ]),
+                    ])
+                    ->label('View'),
+                    // ->after(function (Perbaikan $record) {
+                    //     $recipient = $record->toko()->user()->get();
+                    //     $email = $record->user()->first()->email;
+
+                    //     if ($record->setuju) {
+                    //         Notification::make()
+                    //             ->success()
+                    //             ->title('Perbaikan disetujui')
+                    //             ->body(fn () => `$email menyetujui biaya perbaikan`)
+                    //             ->sendToDatabase($recipient);
+                    //     } else {
+                    //         Notification::make()
+                    //             ->danger()
+                    //             ->title('Perbaikan ditolak')
+                    //             ->body(fn () => `$email menolak biaya perbaikan`)
+                    //             ->sendToDatabase($recipient);
+                    //     }
+                    // }),
                 EditAction::make('Review')
-                    ->icon(null)
+                    ->icon('heroicon-m-star')
                     ->form([
                         RatingStar::make('rating'),
                         Textarea::make('comment'),
