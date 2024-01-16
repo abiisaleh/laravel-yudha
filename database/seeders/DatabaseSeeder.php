@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'abiisaleh',
-            'email' => 'abiisaleh@demo.com',
+            'name' => 'yudha',
+            'email' => 'yudha@demo.com',
             'password' => 'demo1234',
             'role' => 'admin',
             'verified' => true,
@@ -33,15 +33,15 @@ class DatabaseSeeder extends Seeder
         DB::table('toko_user')->insert([
             [
                 'toko_id' => \App\Models\Toko::factory()->create([
-                    'nama' => 'Yudha Cell',
+                    'nama' => 'Erik Cell',
                     'jenis' => 'teknisi',
                     'alamat' => 'Jl. Raya Abepura, (Depan Kantor BPJS)',
                     'kecamatan' => 'Abepura',
                     'kelurahan' => 'Wahno',
                 ])->id,
                 'user_id' => \App\Models\User::factory()->create([
-                    'name' => 'yudha',
-                    'email' => 'yudha@demo.com',
+                    'name' => 'Erik Tandian',
+                    'email' => 'erik@demo.com',
                     'password' => 'demo1234',
                     'role' => 'teknisi',
                     'verified' => true,
