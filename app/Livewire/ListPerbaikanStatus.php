@@ -37,7 +37,7 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Perbaikan::query()->whereHas('user', fn (Builder $query) => $query->where('user_id', auth()->id()))->where('biaya', '!=', null)->where('rating', null))
+            ->query(Perbaikan::query()->whereHas('user', fn (Builder $query) => $query->where('user_id', auth()->id()))->has('detail')->where('rating', null))
             ->columns([
                 TextColumn::make('created_at')
                     ->date('d/m/yy')
@@ -62,14 +62,23 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
                         Grid::make()
                             ->schema([
                                 Placeholder::make('toko')
-                                    ->content(fn (Perbaikan $record) => $record->toko()->first()->nama .', '. $record->toko()->first()->alamat ),
+                                    ->content(fn (Perbaikan $record) => $record->toko()->first()->nama . ', ' . $record->toko()->first()->alamat),
                                 Placeholder::make('detail_kerusakan')
                                     ->content(fn (Perbaikan $record) => $record->detail_kerusakan),
+                                Placeholder::make('perbaikan_komponen')
+                                    ->content(function (Perbaikan $record) {
+                                        $html = '';
+                                        foreach ($record->detail() as $detail) {
+                                            $html += $detail->qty . "x $detail->perbaikan ($detail->harga) = $detail->total<br>";
+                                        }
+
+                                        return $html;
+                                    }),
                             ]),
                         Grid::make()
                             ->schema([
                                 Placeholder::make('biaya')
-                                    ->content(fn (Perbaikan $record) => 'Rp. '.number_format($record->biaya)),
+                                    ->content(fn (Perbaikan $record) => 'Rp. ' . number_format($record->biaya)),
                                 Placeholder::make('hasil_pemeriksaan')
                                     ->content(fn (Perbaikan $record) => $record->hasil_pemeriksaan),
                                 Radio::make('setuju')
@@ -77,24 +86,6 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
                             ]),
                     ])
                     ->label('View'),
-                    // ->after(function (Perbaikan $record) {
-                    //     $recipient = $record->toko()->user()->get();
-                    //     $email = $record->user()->first()->email;
-
-                    //     if ($record->setuju) {
-                    //         Notification::make()
-                    //             ->success()
-                    //             ->title('Perbaikan disetujui')
-                    //             ->body(fn () => `$email menyetujui biaya perbaikan`)
-                    //             ->sendToDatabase($recipient);
-                    //     } else {
-                    //         Notification::make()
-                    //             ->danger()
-                    //             ->title('Perbaikan ditolak')
-                    //             ->body(fn () => `$email menolak biaya perbaikan`)
-                    //             ->sendToDatabase($recipient);
-                    //     }
-                    // }),
                 EditAction::make('Review')
                     ->icon('heroicon-m-star')
                     ->form([

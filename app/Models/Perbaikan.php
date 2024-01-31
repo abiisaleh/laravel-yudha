@@ -11,6 +11,13 @@ class Perbaikan extends Model
 {
     use HasFactory;
 
+    protected $appends = ['biaya'];
+
+    public function getBiayaAttribute()
+    {
+        return $this->detail()->sum('total');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -19,5 +26,10 @@ class Perbaikan extends Model
     public function toko(): BelongsTo
     {
         return $this->belongsTo(Toko::class);
+    }
+
+    public function detail(): HasMany
+    {
+        return $this->hasMany(PerbaikanDetail::class);
     }
 }

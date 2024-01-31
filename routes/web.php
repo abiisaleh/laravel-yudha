@@ -4,11 +4,13 @@ use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\isLogin;
 use App\Models\Order;
 use App\Models\Perbaikan;
+use App\Models\PerbaikanDetail;
 use App\Models\Toko;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // dd(Perbaikan::find());
     return view('pages.index', [
         'terbaik' => [
             'semua' => App\Models\Toko::withAvg('perbaikans', 'rating')->withCount('perbaikans')->where('jenis', 'teknisi')->verified()->orderBy('perbaikans_avg_rating', 'desc')->take(4)->get(),

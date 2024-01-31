@@ -26,7 +26,7 @@ class ListPerbaikan extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Perbaikan::query()->whereHas('user', fn (Builder $query) => $query->where('user_id', auth()->id()))->where('biaya', null))
+            ->query(Perbaikan::query()->whereHas('user', fn (Builder $query) => $query->where('user_id', auth()->id()))->where('detail_kerusakan', !null))
             ->columns([
                 TextColumn::make('created_at')
                     ->date('d/m/yy')

@@ -3,8 +3,10 @@
 namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\PerbaikanResource\Pages;
+use App\Filament\App\Resources\PerbaikanResource\RelationManagers\DetailRelationManager;
 use App\Filament\Resources\PerbaikanResource\RelationManagers;
 use App\Models\Perbaikan;
+use App\Models\PerbaikanDetail;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Facades\Filament;
@@ -17,6 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\DB;
 
 class PerbaikanResource extends Resource
 {
@@ -33,9 +36,6 @@ class PerbaikanResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->required()
                     ->disabledOn('edit'),
-                Forms\Components\TextInput::make('biaya')
-                    ->numeric()
-                    ->required(),
                 Forms\Components\FileUpload::make('gambar')
                     ->image()
                     ->disabledOn('edit'),
@@ -98,12 +98,12 @@ class PerbaikanResource extends Resource
                     ->after(function (Perbaikan $record) {
                         $recipient = $record->user()->get();
                         $toko = $record->first()->nama;
-                        $biaya = $record->biaya;
+                        $alamat = $record->first()->alamat . 'Kel. ' . $record->first()->kelurahan . 'Kec. ' . $record->first()->kecamatan;
 
                         Notification::make()
                             ->info()
                             ->title('Konfirmasi pesananmu')
-                            ->body('Biaya pesananmu dari toko '.$toko.' sebesar Rp. '.number_format($biaya))
+                            ->body('Pesananmu dari toko ' . $toko . ' telah diterima. Silahkan bawa datang unit anda ke alamat kami di ' . $alamat . ' untuk kami periksa agar mengetahui kerusakannya dengan lebih spesifik. Terimakasih 🙏')
                             ->sendToDatabase($recipient);
                     }),
                 Tables\Actions\DeleteAction::make(),
@@ -118,7 +118,9 @@ class PerbaikanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManagePerbaikans::route('/'),
+            'index' => Pages\ListPerbaikans::route('/'),
+            'create' => Pages\CreatePerbaikan::route('/create'),
+            'edit' => Pages\EditPerbaikan::route('/{record}/edit'),
         ];
     }
 
@@ -135,5 +137,12 @@ class PerbaikanResource extends Resource
             return null;
 
         return $dataCount;
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            DetailRelationManager::class,
+        ];
     }
 }

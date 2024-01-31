@@ -6,9 +6,10 @@ use App\Filament\App\Resources\PerbaikanResource;
 use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Facades\Filament;
+use Filament\Resources\Pages\ListRecords;
 
-class ManagePerbaikans extends ManageRecords
+class ListPerbaikans extends ListRecords
 {
     protected static string $resource = PerbaikanResource::class;
 
