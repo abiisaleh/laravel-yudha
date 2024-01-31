@@ -19,7 +19,7 @@ class PerbaikanOverview extends BaseWidget
     {
         if (auth()->user()->role == 'teknisi') {
             return [
-                Stat::make('Total Pendapatan', 'Rp ' . number_format(PerbaikanDetail::whereHas('perbaikan', fn (Builder $query) => $query->where('toko_id', filament()->getTenant()->id))->sum('total'))),
+                Stat::make('Total Pendapatan', 'Rp ' . number_format(PerbaikanDetail::whereHas('perbaikan', fn (Builder $query) => $query->where('toko_id', filament()->getTenant()->id)->where('setuju',true))->sum('total'))),
                 Stat::make('Total Perbaikan', Perbaikan::where('toko_id', filament()->getTenant()->id)->count()),
                 Stat::make('Total Pelanggan', Perbaikan::where('toko_id', filament()->getTenant()->id)->groupBy('email')->count()),
             ];
