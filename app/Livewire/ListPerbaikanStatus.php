@@ -69,7 +69,7 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
                                     ->content(function (Perbaikan $record) {
                                         $html = '';
                                         foreach ($record->detail as $detail) {
-                                            $html += $detail->qty . "x $detail->perbaikan ($detail->harga) = $detail->total<br>";
+                                            $html .= $detail->qty . "x $detail->perbaikan ($detail->harga) = $detail->total<br>";
                                         }
 
                                         return $html;
