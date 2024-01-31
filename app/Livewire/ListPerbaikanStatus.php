@@ -27,6 +27,7 @@ use IbrahimBougaoua\FilamentRatingStar\Actions\RatingStar;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\HtmlString;
 use Livewire\Component;
 
 class ListPerbaikanStatus extends Component implements HasForms, HasTable
@@ -69,10 +70,12 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
                                     ->content(function (Perbaikan $record) {
                                         $html = '';
                                         foreach ($record->detail as $detail) {
-                                            $html .= $detail->qty . "x $detail->perbaikan ($detail->harga) = $detail->total<br>";
+$harga = number_format($detail->harga);
+$total = number_format($detail->total);
+                                            $html .= $detail->qty . "x $detail->perbaikan (Rp. $harga) = Rp. $total<br>";
                                         }
 
-                                        return $html;
+                                        return new HtmlString($html);
                                     }),
                             ]),
                         Grid::make()
