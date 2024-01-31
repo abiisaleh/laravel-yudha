@@ -68,7 +68,7 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
                                 Placeholder::make('perbaikan_komponen')
                                     ->content(function (Perbaikan $record) {
                                         $html = '';
-                                        foreach ($record->detail() as $detail) {
+                                        foreach ($record->detail as $detail) {
                                             $html += $detail->qty . "x $detail->perbaikan ($detail->harga) = $detail->total<br>";
                                         }
 
