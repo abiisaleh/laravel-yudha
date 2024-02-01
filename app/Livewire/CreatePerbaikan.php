@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Perbaikan;
+use App\Models\User;
 use Filament\Actions\Action as ActionsAction;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -55,7 +56,7 @@ class CreatePerbaikan extends Component implements HasForms, HasActions
         $data = $this->form->getState();
         $data['toko_id'] = $this->tokoId;
         $data['user_id'] = auth()->id();
-        Perbaikan::create($data);
+        $record = Perbaikan::create($data);
 
         $this->form->fill();
 
@@ -63,6 +64,16 @@ class CreatePerbaikan extends Component implements HasForms, HasActions
             ->title('Success')
             ->success()
             ->send();
+
+        $recipient = $record->user()->get();
+        $toko = $record->toko->nama;
+        $alamat = $record->toko->alamat . 'Kel. ' . $record->toko->kelurahan . 'Kec. ' . $record->toko->kecamatan;
+
+        Notification::make()
+            ->success()
+            ->title('Pesanan Berhsil dibuat')
+            ->body('Selamat datang di ' . $toko . '. Jika ada masalah dengan handphone anda Silahkan bawa datang unit anda ke ' . $alamat . ', untuk kami periksa agar kami mengetahui kerusakannya dengan lebih spesifik. Terimakasih 🙏')
+            ->sendToDatabase($recipient);
     }
 
     protected function createAction()

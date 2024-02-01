@@ -42,8 +42,6 @@
 
         @yield('content')
 
-        @livewire('notifications')
-
         @if (auth()->check())   
             @livewire('database-notifications')
         @endif

@@ -94,18 +94,7 @@ class PerbaikanResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
-                    ->after(function (Perbaikan $record) {
-                        $recipient = $record->user()->get();
-                        $toko = $record->first()->nama;
-                        $alamat = $record->first()->alamat . 'Kel. ' . $record->first()->kelurahan . 'Kec. ' . $record->first()->kecamatan;
-
-                        Notification::make()
-                            ->info()
-                            ->title('Konfirmasi pesananmu')
-                            ->body('Pesananmu dari toko ' . $toko . ' telah diterima. Silahkan bawa datang unit anda ke alamat kami di ' . $alamat . ' untuk kami periksa agar mengetahui kerusakannya dengan lebih spesifik. Terimakasih 🙏')
-                            ->sendToDatabase($recipient);
-                    }),
+                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
