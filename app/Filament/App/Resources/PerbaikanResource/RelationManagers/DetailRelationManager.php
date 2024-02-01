@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 class DetailRelationManager extends RelationManager
 {
     protected static string $relationship = 'detail';
-    
+
     protected static ?string $label = 'perbaikan komponen';
 
     public function form(Form $form): Form
@@ -49,14 +49,10 @@ class DetailRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('perbaikan'),
                 Tables\Columns\TextColumn::make('harga')
                     ->numeric(),
-                Tables\Columns\TextColumn::make('jumlah')
+                Tables\Columns\TextColumn::make('total')
+                    ->label('Jumlah')
                     ->numeric()
-                    ->summarize(
-                        Summarizer::make()
-                            ->label('Total')
-                            ->using(fn (PerbaikanDetail $record): string => $record->sum(DB::raw('qty*harga')))
-                            ->numeric()
-                    ),
+                    ->summarize(Sum::make()->label('Total')),
             ])
             ->filters([
                 //
