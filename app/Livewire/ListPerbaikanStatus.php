@@ -70,8 +70,8 @@ class ListPerbaikanStatus extends Component implements HasForms, HasTable
                                     ->content(function (Perbaikan $record) {
                                         $html = '';
                                         foreach ($record->detail as $detail) {
-$harga = number_format($detail->harga);
-$total = number_format($detail->total);
+                                            $harga = number_format($detail->harga);
+                                            $total = number_format($detail->total);
                                             $html .= $detail->qty . "x $detail->perbaikan (Rp. $harga) = Rp. $total<br>";
                                         }
 
@@ -85,7 +85,8 @@ $total = number_format($detail->total);
                                 Placeholder::make('hasil_pemeriksaan')
                                     ->content(fn (Perbaikan $record) => $record->hasil_pemeriksaan),
                                 Radio::make('setuju')
-                                    ->boolean(),
+                                    ->boolean()
+                                    ->hidden(fn (Perbaikan $record) => $record->setuju ? true : false),
                             ]),
                     ])
                     ->label('View'),
