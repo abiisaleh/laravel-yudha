@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\DistributorResource\Pages;
 use App\Filament\Admin\Resources\DistributorResource\RelationManagers;
 use App\Models\Toko;
+use App\Models\User;
 use Cheesegrits\FilamentGoogleMaps\Fields\Map;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -77,19 +78,20 @@ class DistributorResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(Toko::where('jenis', 'distributor'))
+            ->query(User::where('role', 'distributor'))
             ->columns([
-                TextColumn::make('nama')->searchable(),
-                TextColumn::make('kecamatan')->searchable(),
-                TextColumn::make('kelurahan')->searchable(),
-                TextColumn::make('user.email')->searchable(),
-                ToggleColumn::make('user.verified')->label('Verified'),
+                TextColumn::make('toko.nama')->searchable(),
+                TextColumn::make('toko.kecamatan')->searchable(),
+                TextColumn::make('toko.kelurahan')->searchable(),
+                TextColumn::make('email')->searchable(),
+                ToggleColumn::make('verified'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->url(fn (User $record) => 'distributors/' . $record->toko->first()->id . '/edit')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

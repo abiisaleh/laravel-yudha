@@ -71,7 +71,8 @@ class PerbaikanResource extends Resource
                             ->success()
                             ->title('Pembayaran lunas')
                             ->sendToDatabase($recipient);
-                    }),
+                    })
+                    ->disabled(fn (Perbaikan $record) => !$record->setuju),
                 Tables\Columns\ToggleColumn::make('selesai')
                     ->afterStateUpdated(function (Perbaikan $record) {
                         $recipient = $record->user()->get();
@@ -80,7 +81,8 @@ class PerbaikanResource extends Resource
                             ->success()
                             ->title('Perbaikan telah selesai')
                             ->sendToDatabase($recipient);
-                    }),
+                    })
+                    ->disabled(fn (Perbaikan $record) => !$record->setuju),
                 Tables\Columns\TextColumn::make('created_at')
                     ->since()
                     ->sortable()

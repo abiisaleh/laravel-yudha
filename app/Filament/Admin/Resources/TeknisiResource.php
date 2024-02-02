@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\TeknisiResource\Pages;
 use App\Filament\Admin\Resources\TeknisiResource\RelationManagers;
 use App\Models\Toko;
+use App\Models\User;
 use Cheesegrits\FilamentGoogleMaps\Fields\Map;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -17,6 +18,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -80,19 +82,21 @@ class TeknisiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(Toko::where('jenis', 'teknisi'))
+            ->query(User::where('role', 'teknisi'))
             ->columns([
-                TextColumn::make('nama')->searchable(),
-                TextColumn::make('kecamatan')->searchable(),
-                TextColumn::make('kelurahan')->searchable(),
-                TextColumn::make('user.email')->searchable()->copyable(),
-                ToggleColumn::make('user.verified')->label('Verified'),
+                TextColumn::make('toko.nama')->searchable(),
+                TextColumn::make('toko.kecamatan')->searchable(),
+                TextColumn::make('toko.kelurahan')->searchable(),
+                TextColumn::make('email')->searchable()->copyable(),
+                ToggleColumn::make('verified'),
+                // IconColumn::make('user.verified')->boolean(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->url(fn (User $record) => 'teknisis/' . $record->toko->first()->id . '/edit')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

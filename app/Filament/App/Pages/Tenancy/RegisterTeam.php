@@ -71,6 +71,7 @@ class RegisterTeam extends RegisterTenant
 
     protected function handleRegistration(array $data): Toko
     {
+        $data['jenis'] = auth()->user()->role;
         $toko = Toko::create($data);
 
         $toko->user()->attach(auth()->user());
