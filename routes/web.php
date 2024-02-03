@@ -112,7 +112,7 @@ Route::get('print/{jenis}/{id}/{waktu}', function ($jenis, $id, $waktu) {
         $total = $data->get()->sum('order_barangs_sum_subtotal');
     } else if ($jenis == 'perbaikan') {
         $data = Perbaikan::with('user')->where('toko_id', $id);
-        $total = PerbaikanDetail::whereHas('perbaikan', fn (Builder $query) => $query->where('toko_id', filament()->getTenant()->id)->where('setuju',true))->sum('total');
+        $total = PerbaikanDetail::whereHas('perbaikan', fn (Builder $query) => $query->where('toko_id', $id)->where('setuju',true))->sum('total');
     } else
         abort(404);
 
